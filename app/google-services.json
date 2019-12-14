@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "159890159853",
+    "firebase_url": "https://chatbot-demo-56473.firebaseio.com",
+    "project_id": "chatbot-demo-56473",
+    "storage_bucket": "chatbot-demo-56473.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159890159853:android:a0373042cb3899023df4e4",
+        "android_client_info": {
+          "package_name": "com.fanonx.chatbot_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159890159853-ae9kk0t5j45crnrhfb0v30snp3i8o2or.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fanonx.chatbot_demo",
+            "certificate_hash": "4e488c2510c2d49640520dff5a17610f0ac2b9df"
+          }
+        },
+        {
+          "client_id": "159890159853-ratm4qq6o4ud3bojhjubv1unvvclh41r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH5-cC7H87VodEB8G-FEpSfbiXs-vXKY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159890159853-ratm4qq6o4ud3bojhjubv1unvvclh41r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
