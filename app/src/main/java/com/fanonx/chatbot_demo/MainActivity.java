@@ -1,7 +1,6 @@
 package com.fanonx.chatbot_demo;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -11,14 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fanonx.chatbot_demo.commons.Constants;
-import com.fanonx.chatbot_demo.datahandler.sqlDataHandler.RoomDataHandler;
-import com.fanonx.chatbot_demo.models.ActivfitModel;
-import com.fanonx.chatbot_demo.models.ActivityModel;
-import com.fanonx.chatbot_demo.models.HeartRateModel;
-import com.fanonx.chatbot_demo.searcher.text.TextSearch;
+import com.fanonx.chatbot_demo.datahandler.DataSetupFacade;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,46 +23,15 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<ResponseMessage> responseMessageList;
     MessageAdapter messageAdapter;
-    TextSearch textSearcher = new TextSearch();
-    List<ActivfitModel> activfitModels;
-    List<ActivityModel> activityModels;
-    List<HeartRateModel> heartRateModels;
+    DataSetupFacade facade = new DataSetupFacade();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        try {
-//            FireBaseDataHandler.parseJson(getApplicationContext(), Constants.activFitPath, Constants.ACTIVFIT_CLASSNAME);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        // inserting the activfit data into sql lite db on a single thread.
-        new Thread(() -> {
-            try {
-                RoomDataHandler.parseJSON(getApplicationContext(), Constants.activFitPath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            activfitModels = RoomDataHandler.getAllActivfitModels(getApplicationContext());
-            Log.i("MainActivityRoom", "activfit list size: " + activfitModels.size() + "");
-        }).start();
-
-        // inserting the activity data into sql lite db on a new thread.
-        new Thread(() -> {
-            RoomDataHandler.parseActivity(getApplicationContext(), Constants.activityPath);
-            activityModels = RoomDataHandler.getAllActivityModels(getApplicationContext());
-            Log.i("MainActivityRoom", "activity list size: " + activityModels.size() + "");
-        }).start();
-
-        // inserting the heart rate data into sql lite db on a new thread.
-        new Thread(() -> {
-            RoomDataHandler.parseHeartRate(getApplicationContext(), Constants.heartRatePath);
-            heartRateModels = RoomDataHandler.getAllHeartRateModels(getApplicationContext());
-            Log.i("MainActivityRoom", "heart rate size: " + heartRateModels.size() + "");
-        }).start();
+        // set up data on no sql and fire base -> comment this line out after you ran it once
+        // facade.setupData(getApplicationContext());
 
         userInput = findViewById(R.id.userInput);
         recyclerView = findViewById(R.id.conversation);
