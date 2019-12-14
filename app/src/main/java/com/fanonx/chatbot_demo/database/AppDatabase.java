@@ -37,4 +37,10 @@ public abstract class AppDatabase extends RoomDatabase {
     /**
      * abstract Method to call the ActivFitModelDao */
     public abstract ActivfitModelDao activfitModelDao();
+
+    /** abstract method for ActivityModelDao */
+    public abstract ActivityModelDAO activityModelDAO();
+
+    /** abstract method to call HeartRatDAO */
+    public abstract HeartRateDao heartRateDao();
 }

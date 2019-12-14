@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fanonx.chatbot_demo.database.ActivfitModelDao;
+import com.fanonx.chatbot_demo.database.ActivityModelDAO;
 import com.fanonx.chatbot_demo.database.AppDatabase;
+import com.fanonx.chatbot_demo.database.HeartRateDao;
 import com.fanonx.chatbot_demo.models.ActivfitModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,13 +27,28 @@ public class RoomDataHandler {
     private static Gson gson = new Gson();
 
     /**
-     * Constructor for ActivfitModelDAO
-     * takes the context
+     * method to get the ActivFitModelDao
      * */
     private static ActivfitModelDao getActivfitModelDao(Context appContext)  {
         // get the instance of the app
         AppDatabase appDatabase = AppDatabase.getInstance(appContext);
         return appDatabase.activfitModelDao();
+    }
+
+    /**
+     * method to get the ActivityModelDao.
+     * */
+    private static ActivityModelDAO getActivityModelDao(Context appContext) {
+        AppDatabase appDatabase = AppDatabase.getInstance(appContext);
+        return appDatabase.activityModelDAO();
+    }
+
+    /**
+     * Method to invoke heartrateDao.
+     * */
+    private static HeartRateDao getHeartRateModelDao(Context appContext) {
+        AppDatabase appDatabase = AppDatabase.getInstance(appContext);
+        return  appDatabase.heartRateDao();
     }
 
     /**
