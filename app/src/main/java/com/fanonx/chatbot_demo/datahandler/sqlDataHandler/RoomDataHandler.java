@@ -8,6 +8,8 @@ import com.fanonx.chatbot_demo.database.ActivityModelDAO;
 import com.fanonx.chatbot_demo.database.AppDatabase;
 import com.fanonx.chatbot_demo.database.HeartRateDao;
 import com.fanonx.chatbot_demo.models.ActivfitModel;
+import com.fanonx.chatbot_demo.models.ActivityModel;
+import com.fanonx.chatbot_demo.models.HeartRateModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -79,4 +81,65 @@ public class RoomDataHandler {
         ActivfitModelDao dao = getActivfitModelDao(appContext);
         return dao.getAllModels();
     }
+
+    /**
+     * Method to parse the activity json file and insert it into the database
+     * */
+    public static void parseActivity(Context appContext, String jsonFilePath) {
+        // read the json file
+        try {
+            InputStream is = appContext.getAssets().open(jsonFilePath);
+            Reader reader = new InputStreamReader(is);
+            // structure the type for gson
+            Type activityListType = new TypeToken<ArrayList<ActivityModel>>(){}.getType();
+            List<ActivityModel> activityModels = gson.fromJson(reader, activityListType);
+
+            // use the DAO to insert the data into the database
+            ActivityModelDAO dao = getActivityModelDao(appContext);
+            dao.insert(activityModels);
+
+        } catch (Exception e) {
+            Log.i(TAG, "Error:" + e.getMessage());
+        }
+    }
+
+    /**
+     * Method to get a list of ActivityModels objects
+     * @param appContext the context of the app
+     * */
+    public static List<ActivityModel> getAllActivityModels(Context appContext)  {
+        ActivityModelDAO dao = getActivityModelDao(appContext);
+        return dao.getAllModels();
+    }
+
+    /**
+     * Method to parse the HeartRate json file into the sql database.
+     * */
+    public static void parseHeartRate(Context appContext, String jsonFilePath) {
+        // read the json file
+        try {
+            InputStream is = appContext.getAssets().open(jsonFilePath);
+            Reader reader = new InputStreamReader(is);
+            // structure the type for gson
+            Type heartRateListType = new TypeToken<ArrayList<HeartRateModel>>(){}.getType();
+            List<HeartRateModel> heartRateModels = gson.fromJson(reader, heartRateListType);
+
+            // use the DAO to insert the data into the database
+            HeartRateDao dao = getHeartRateModelDao(appContext);
+            dao.insert(heartRateModels);
+
+        } catch (Exception e) {
+            Log.i(TAG, "Error:" + e.getMessage());
+        }
+    }
+
+    /**
+     * Method to get a list of Heart rate objects
+     * @param appContext the context of the app
+     * */
+    public static List<HeartRateModel> getAllHeartRateModels(Context appContext)  {
+        HeartRateDao dao = getHeartRateModelDao(appContext);
+        return dao.getAllModels();
+    }
+
 }

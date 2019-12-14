@@ -1,7 +1,5 @@
 package com.fanonx.chatbot_demo.searcher.text;
 
-import com.fanonx.chatbot_demo.commons.Constants;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +14,6 @@ public class TextSearch {
      * Text search class to handle brute force search on a text file.
      * */
     private static final Logger logger = LoggerFactory.getLogger(TextSearch.class);
-    private String filePath = Constants.txtData;
 
     /**
      * method to loop over the individual txt files and write them to one big txt file.

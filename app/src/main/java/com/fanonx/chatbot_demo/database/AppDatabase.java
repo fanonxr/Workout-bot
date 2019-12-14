@@ -7,8 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.fanonx.chatbot_demo.models.ActivfitModel;
+import com.fanonx.chatbot_demo.models.ActivityModel;
+import com.fanonx.chatbot_demo.models.HeartRateModel;
 
-@Database(entities = {ActivfitModel.class}, version = 1)
+@Database(entities = {ActivfitModel.class, ActivityModel.class, HeartRateModel.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * AppDatabase class

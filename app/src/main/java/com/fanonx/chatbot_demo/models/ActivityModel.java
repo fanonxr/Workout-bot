@@ -1,5 +1,6 @@
 package com.fanonx.chatbot_demo.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -13,18 +14,17 @@ public class ActivityModel {
      * */
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @SerializedName("time_stamp")
     private String timeStamp;
     @Embedded
     @SerializedName("sensor_data")
     private ActivitySensorData sensorData;
     private String sensorName;
-    private String timestamp;
 
-    public ActivityModel(String timeStamp, ActivitySensorData sensorData, String sensorName, String timestamp) {
+    public ActivityModel(String timeStamp, ActivitySensorData sensorData, String sensorName) {
         this.timeStamp = timeStamp;
         this.sensorData = sensorData;
         this.sensorName = sensorName;
-        this.timestamp = timestamp;
     }
 
     public int getId() {
@@ -59,14 +59,8 @@ public class ActivityModel {
         this.sensorName = sensorName;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "ActivityModel{" +
@@ -74,7 +68,6 @@ public class ActivityModel {
                 ", timeStamp='" + timeStamp + '\'' +
                 ", sensorData=" + sensorData +
                 ", sensorName='" + sensorName + '\'' +
-                ", timestamp='" + timestamp + '\'' +
                 '}';
     }
 }

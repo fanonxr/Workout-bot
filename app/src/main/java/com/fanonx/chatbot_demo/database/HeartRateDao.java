@@ -16,5 +16,5 @@ public interface HeartRateDao {
     void insert(List<HeartRateModel> model);
     /** method to return all the data from the database as objects*/
     @Query("SELECT * from heartrate")
-    List<HeartRateDao> getAllModels();
+    List<HeartRateModel> getAllModels();
 }

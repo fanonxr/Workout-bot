@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fanonx.chatbot_demo.commons.Constants;
 import com.fanonx.chatbot_demo.datahandler.sqlDataHandler.RoomDataHandler;
 import com.fanonx.chatbot_demo.models.ActivfitModel;
+import com.fanonx.chatbot_demo.models.ActivityModel;
+import com.fanonx.chatbot_demo.models.HeartRateModel;
 import com.fanonx.chatbot_demo.searcher.text.TextSearch;
 
 import java.io.IOException;
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     List<ResponseMessage> responseMessageList;
     MessageAdapter messageAdapter;
     TextSearch textSearcher = new TextSearch();
+    List<ActivfitModel> activfitModels;
+    List<ActivityModel> activityModels;
+    List<HeartRateModel> heartRateModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +46,29 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
+        // inserting the activfit data into sql lite db on a single thread.
         new Thread(() -> {
             try {
                 RoomDataHandler.parseJSON(getApplicationContext(), Constants.activFitPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            List<ActivfitModel> models = RoomDataHandler.getAllActivfitModels(getApplicationContext());
-            Log.i("MainActivityRoom", models.size() + "");
+            activfitModels = RoomDataHandler.getAllActivfitModels(getApplicationContext());
+            Log.i("MainActivityRoom", "activfit list size: " + activfitModels.size() + "");
+        }).start();
+
+        // inserting the activity data into sql lite db on a new thread.
+        new Thread(() -> {
+            RoomDataHandler.parseActivity(getApplicationContext(), Constants.activityPath);
+            activityModels = RoomDataHandler.getAllActivityModels(getApplicationContext());
+            Log.i("MainActivityRoom", "activity list size: " + activityModels.size() + "");
+        }).start();
+
+        // inserting the heart rate data into sql lite db on a new thread.
+        new Thread(() -> {
+            RoomDataHandler.parseHeartRate(getApplicationContext(), Constants.heartRatePath);
+            heartRateModels = RoomDataHandler.getAllHeartRateModels(getApplicationContext());
+            Log.i("MainActivityRoom", "heart rate size: " + heartRateModels.size() + "");
         }).start();
 
         userInput = findViewById(R.id.userInput);
