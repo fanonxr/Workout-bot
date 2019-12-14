@@ -18,14 +18,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDataHandler {
+    /**
+     * Room Handler class to manage SQL operations on various models
+     * */
     private static final String TAG = RoomDataHandler.class.getSimpleName();
     private static Gson gson = new Gson();
 
+    /**
+     * Constructor for ActivfitModelDAO
+     * takes the context
+     * */
     private static ActivfitModelDao getActivfitModelDao(Context appContext)  {
+        // get the instance of the app
         AppDatabase appDatabase = AppDatabase.getInstance(appContext);
         return appDatabase.activfitModelDao();
     }
 
+    /**
+     * Method to parseJson file and insert it into the database.
+     * @param appContext the context of the app
+     * @param jsonFilePath the file path to the json file
+     * */
     public static void parseJSON(Context appContext, String jsonFilePath) throws IOException {
         InputStream is = appContext.getAssets().open(jsonFilePath);
         // read the JSON file
@@ -41,6 +54,10 @@ public class RoomDataHandler {
         }
     }
 
+    /**
+     * Method to get a list of ActFitModel objects in java.
+     * @param appContext the context of the app
+     * */
     public static List<ActivfitModel> getAllActivfitModels(Context appContext)  {
         ActivfitModelDao dao = getActivfitModelDao(appContext);
         return dao.getAllModels();
