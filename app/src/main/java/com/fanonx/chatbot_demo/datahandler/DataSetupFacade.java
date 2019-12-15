@@ -42,6 +42,5 @@ public class DataSetupFacade {
         new Thread(() -> {
             RoomDataHandler.parseHeartRate(appContext, Constants.heartRatePath);
         }).start();
-
     }
 }

@@ -10,7 +10,7 @@ import com.fanonx.chatbot_demo.models.ActivfitModel;
 import com.fanonx.chatbot_demo.models.ActivityModel;
 import com.fanonx.chatbot_demo.models.HeartRateModel;
 
-@Database(entities = {ActivfitModel.class, ActivityModel.class, HeartRateModel.class}, version = 1)
+@Database(entities = {ActivfitModel.class, ActivityModel.class, HeartRateModel.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * AppDatabase class
