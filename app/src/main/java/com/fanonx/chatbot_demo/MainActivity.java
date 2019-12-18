@@ -1,6 +1,7 @@
 package com.fanonx.chatbot_demo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fanonx.chatbot_demo.chatbot.ChatBot;
+import com.fanonx.chatbot_demo.commons.Constants;
 import com.fanonx.chatbot_demo.datahandler.DataSetupFacade;
 import com.fanonx.chatbot_demo.datahandler.firehandler.FireBaseDataHandler;
 import com.fanonx.chatbot_demo.datahandler.sqlDataHandler.RoomDataHandler;
@@ -19,7 +21,14 @@ import com.fanonx.chatbot_demo.models.HeartRateModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import ai.api.AIListener;
+import ai.api.android.AIService;
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
+import ai.api.model.Result;
+
+public class MainActivity extends AppCompatActivity implements AIListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     /**
      * fields to be created on start up of app.
      */
@@ -37,11 +46,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // configuration for dialog flow
+        AIService aiService = AIService.getService(this, Constants.config);
+        aiService.setListener(this);
+
         // set up data on no sql and fire base -> comment this line out after you ran it once
         // facade.setupData(getApplicationContext());
 
-        fireBaseDataHandler.getHeartRateItems();
+        // fireBaseDataHandler.getHeartRateItems();
 
+        // thread to get the heart rates from the SQL database
         new Thread(() -> {
            listOfHeartRateModels = RoomDataHandler.getAllHeartRateModels(getApplicationContext());
         }).start();
@@ -61,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    // start listening
+                    aiService.startListening();
                     // sent from the user
                     ResponseMessage userMessage = new ResponseMessage(userInput.getText().toString(), true);
                     responseMessageList.add(userMessage);
@@ -69,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     // sent from the chat bot
                     ResponseMessage botMessage = new ResponseMessage(botResponse, false);
                     responseMessageList.add(botMessage);
+
 
                     // notify the view that the data has changed => update the view
                     messageAdapter.notifyDataSetChanged();
@@ -98,5 +115,41 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Error " + e.getMessage());
         }
         return false;
+    }
+
+    /**
+     * Dialog flow AIResponse message
+     *
+     * */
+    @Override
+    public void onResult(AIResponse result) {
+        Result r = result.getResult();
+        Log.i(TAG, "Reached");
+        Log.i(TAG, r.getResolvedQuery());
+    }
+
+    @Override
+    public void onError(AIError error) {
+        Log.d(TAG, error.getMessage());
+    }
+
+    @Override
+    public void onAudioLevel(float level) {
+
+    }
+
+    @Override
+    public void onListeningStarted() {
+
+    }
+
+    @Override
+    public void onListeningCanceled() {
+
+    }
+
+    @Override
+    public void onListeningFinished() {
+
     }
 }

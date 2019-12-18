@@ -43,4 +43,9 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.29'
     implementation 'com.couchbase.lite:couchbase-lite-android:2.5.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.github.kittinunf.fuel:fuel-android:1.12.1'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation 'ai.api:sdk:2.0.7@aar'
+    implementation 'ai.api:libai:1.6.12'
+
 }

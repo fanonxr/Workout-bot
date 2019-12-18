@@ -58,6 +58,8 @@ public class ChatBot {
         String month = this.monthMap.get(dateSeparate[0]);
         // reformat the date string
         return month + " " + dateSeparate[1] + " " + dateSeparate[2];
+
+        // Jun 12 2017
     }
 
     /**
@@ -111,5 +113,11 @@ public class ChatBot {
     }
     // TODO: search method for activfit and activity
 
+    /**
+     * Method to send user's input to dialog flow
+     * */
+    public void sendMessageToDialogFlow(String userInput) {
+        
+    }
 
 }

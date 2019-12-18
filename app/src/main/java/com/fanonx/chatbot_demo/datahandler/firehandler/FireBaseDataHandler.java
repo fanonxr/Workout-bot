@@ -4,16 +4,11 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.fanonx.chatbot_demo.models.ActivfitModel;
 import com.fanonx.chatbot_demo.models.ActivityModel;
 import com.fanonx.chatbot_demo.models.HeartRateModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -198,21 +193,21 @@ public class FireBaseDataHandler {
      * Method to get fire data from firebase
      * */
     public void getHeartRateItems() {
-        db.collection("heartrate").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult() != null) {
-                        List<HeartRateModel> heartRateModels = task.getResult().toObjects(HeartRateModel.class);
-                        for (HeartRateModel model: heartRateModels) {
-                            Log.i(TAG, model.getTimestamp());
-                        }
-                    }
-                } else {
-                    Log.i(TAG, "Error: " ,task.getException());
-                }
-            }
-        });
+//        db.collection("heartrate").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    if (task.getResult() != null) {
+//                        List<HeartRateModel> heartRateModels = task.getResult().toObjects(HeartRateModel.class);
+//                        for (HeartRateModel model: heartRateModels) {
+//                            Log.i(TAG, model.getTimestamp());
+//                        }
+//                    }
+//                } else {
+//                    Log.i(TAG, "Error: " ,task.getException());
+//                }
+//            }
+//        });
     }
 
 }
