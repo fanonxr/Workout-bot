@@ -17,4 +17,5 @@ public interface HeartRateDao {
     /** method to return all the data from the database as objects*/
     @Query("SELECT * from heartrate")
     List<HeartRateModel> getAllModels();
+//    @Query("SELECT bpm from heartrate WHERE ")
 }

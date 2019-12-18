@@ -18,10 +18,10 @@ public class DataSetupFacade {
 
     public void setupData(Context appContext) {
         // insert the data into fire base
-        Log.i(TAG, "Inserting the data into firebase.");
-        fireBaseDataHandler.parseJson(appContext, Constants.activFitPath);
-        fireBaseDataHandler.parseActivity(appContext, Constants.activityPath);
-        fireBaseDataHandler.parseHeartRate(appContext, Constants.heartRatePath);
+//        Log.i(TAG, "Inserting the data into firebase.");
+//        fireBaseDataHandler.parseJson(appContext, Constants.activFitPath);
+//        fireBaseDataHandler.parseActivity(appContext, Constants.activityPath);
+//        fireBaseDataHandler.parseHeartRate(appContext, Constants.heartRatePath);
 
         Log.i(TAG, "Inserting data into sql lite");
         // inserting the activfit data into sql lite db on a single thread.

@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fanonx.chatbot_demo.chatbot.ChatBot;
 import com.fanonx.chatbot_demo.commons.Constants;
 import com.fanonx.chatbot_demo.datahandler.DataSetupFacade;
-import com.fanonx.chatbot_demo.datahandler.firehandler.FireBaseDataHandler;
-import com.fanonx.chatbot_demo.datahandler.sqlDataHandler.RoomDataHandler;
-import com.fanonx.chatbot_demo.models.HeartRateModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,28 +34,28 @@ public class MainActivity extends AppCompatActivity implements AIListener {
     List<ResponseMessage> responseMessageList;
     MessageAdapter messageAdapter;
     DataSetupFacade facade = new DataSetupFacade();
-    ChatBot chatBot = new ChatBot();
-    List<HeartRateModel> listOfHeartRateModels;
-    FireBaseDataHandler fireBaseDataHandler = new FireBaseDataHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // create chatbot instance
+        ChatBot chatBot = new ChatBot((App) getApplication());
+
         // configuration for dialog flow
         AIService aiService = AIService.getService(this, Constants.config);
         aiService.setListener(this);
 
         // set up data on no sql and fire base -> comment this line out after you ran it once
-        // facade.setupData(getApplicationContext());
+        facade.setupData(getApplicationContext());
 
         // fireBaseDataHandler.getHeartRateItems();
+        // load in the data
+//        listOfHeartRateModels = ((App) getApplication()).getHeartRateModels();
+//        activityModels = ((App) getApplication()).getActivityModels();
+//        activfitModels = ((App) getApplication()).getActivfitModels();
 
-        // thread to get the heart rates from the SQL database
-        new Thread(() -> {
-           listOfHeartRateModels = RoomDataHandler.getAllHeartRateModels(getApplicationContext());
-        }).start();
 
         userInput = findViewById(R.id.userInput);
         recyclerView = findViewById(R.id.conversation);
@@ -81,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AIListener {
                     ResponseMessage userMessage = new ResponseMessage(userInput.getText().toString(), true);
                     responseMessageList.add(userMessage);
 
-                    String botResponse = chatBot.generateMessageForUserSQL(userMessage.getTextMessage(), listOfHeartRateModels);
+                    String botResponse = chatBot.generateMessageForUserSQL(userMessage.getTextMessage());
                     // sent from the chat bot
                     ResponseMessage botMessage = new ResponseMessage(botResponse, false);
                     responseMessageList.add(botMessage);
